@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% extends 'base.html' %}
+    {% block header %}
+    {{ super() }}
+    {% endblock %}
+    {% block nav %}
+    {{ super() }}
+    {% endblock %}
+
+    <body>
+    {% block content %}
+    {{ super() }}
+    <div id="all">
+
+        <div id="content">
+            <div class="container">
+
+                <div class="col-md-12">
+
+                    <ul class="breadcrumb">
+                        <li><a href="#">Главная</a>
+                        </li>
+                        <li>Мой аккаунт</li>
+                    </ul>
+
+                </div>
+
+                <div class="col-md-3">
+                    <!-- *** CUSTOMER MENU ***
+ _________________________________________________________ -->
+                    <div class="panel panel-default sidebar-menu">
+
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Секция пользователя</h3>
+                        </div>
+
+                        <div class="panel-body">
+
+                            <ul class="nav nav-pills nav-stacked">
+                                <li class="active">
+                                    <a href="{{ url_for('cart') }}"><i class="fa fa-shopping-cart"></i>Моя корзина</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url_for('customer_order') }}"><i class="fa fa-list"></i>Мои заказы</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url_for('customer_account') }}"><i class="fa fa-user"></i> Мой аккаунт</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url_for('logout') }}"><i class="fa fa-sign-out"></i> Выйти</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- /.col-md-3 -->
+
+                    <!-- *** CUSTOMER MENU END *** -->
+                </div>
+
+                <div class="col-md-9">
+                    <div class="box">
+                        <h1>Мой аккаунт</h1>
+                        <br>
+
+                        <p class="text-muted">Имя: {{ current_user.getName() }}</p>
+                        <p class="text-muted">Email: {{ current_user.getEmail() }}</p>
+
+                        <h3>Сменить пароль</h3>
+
+                        {% for cat, msg in get_flashed_messages(True) %}
+                            <div class="flash {{cat}}"><p>{{ msg }}</p></div>
+                            {% endfor %}
+                        <form action="{{ url_for('customer_account') }}" method="post">
+                            {{ form.hidden_tag() }}
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+
+                                <p>{{ form.old_password.label() }} </p> 
+                                {% if form.old_password.errors %}
+                                    {{ form.old_password(class="invalid") }}
+                                <span class="invalid-feedback">
+                                    {% for e in form.old_password.errors %}
+                                    {{ e }}
+                                    {% endfor %}
+                                </span>
+                                {% else %}
+                                    {{ form.old_password(class="form-control") }}
+                                {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <p>{{ form.new_password.label() }} </p> 
+                                {% if form.new_password.errors %}
+                                    {{ form.new_password(class="invalid") }}
+                                <span class="invalid-feedback">
+                                    {% for e in form.new_password.errors %}
+                                    {{ e }}
+                                    {% endfor %}
+                                </span>
+                                {% else %}
+                                    {{ form.new_password(class="form-control") }}
+                                {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <p>{{ form.repeat_new_password.label() }} </p> 
+                                {% if form.repeat_new_password.errors %}
+                                    {{ form.repeat_new_password(class="invalid") }}
+                                <span class="invalid-feedback">
+                                    {% for e in form.repeat_new_password.errors %}
+                                    {{ e }}
+                                    {% endfor %}
+                                </span>
+                                {% else %}
+                                    {{ form.repeat_new_password(class="form-control") }}
+                                {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row -->
+
+                            <div class="col-sm-12 text-center">
+                                <i class="fa fa-save"></i>{{ form.submit(class="btn btn-primary") }}
+                            </div>
+                        </form>
+
+                        <hr>
+
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#content -->
+        
+    {% endblock %}
+    </body>
+    {% block footer %}
+    {{ super() }}
+    {% endblock %}
+    </html>

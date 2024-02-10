@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% extends 'base.html' %}
+    {% block header %}
+    {{ super() }}
+    {% endblock %}
+    {% block nav %}
+    {{ super() }}
+    {% endblock %}
+
+    <body>
+    {% block content %}
+    {{ super() }}
+
+    <div id="all">
+
+        <div id="content">
+            <div class="container">
+
+                <div class="col-md-9" id="checkout">
+
+                    <div class="box">
+                        <form method="post" action="customer-order.html">
+                            <h1>Оформление заказа</h1>
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="firstname">Имя</label>
+                                            <input type="text" class="form-control" id="firstname">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="lastname">Фамилия</label>
+                                            <input type="text" class="form-control" id="lastname">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+
+
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-3">
+                                        <div class="form-group">
+                                            <label for="zip">Индекс</label>
+                                            <input type="text" class="form-control" id="city">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-3">
+                                        <div class="form-group">
+                                            <label for="street">Улица, дом</label>
+                                            <input type="text" class="form-control" id="zip">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-3">
+                                        <div class="form-group">
+                                            <label for="city">Город</label>
+                                            <input type="text" class="form-control" id="state">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-3">
+                                        <div class="form-group">
+                                            <label for="country">Страна</label>
+                                            <input type="text" class="form-control" id="country">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="phone">Телефон</label>
+                                            <input type="text" class="form-control" id="phone">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="text" class="form-control" id="email">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- /.row -->
+                            </div>
+
+                            <div class="box-footer">
+                                <div class="pull-left">
+                                    <a href="{{ url_for('cart') }}" class="btn btn-default"><i class="fa fa-chevron-left"></i>Вернуться в корзину</a>
+                                </div>
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-primary">Заказать<i class="fa fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.box -->
+
+
+                </div>
+                <!-- /.col-md-9 -->
+
+                <div class="col-md-3">
+                    <div class="box" id="order-summary">
+                        <div class="box-header">
+                            <h3>Детали заказа</h3>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>Сумма: </td>
+                                        <th>{{ total }} ₸</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Доставка: </td>
+                                        <th>0 ₸</th>
+                                    </tr>
+                                    <tr class="total">
+                                        <td>Всего: </td>
+                                        <th>{{ total }} ₸</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- /.col-md-3 -->
+                <!-- /.col-md-3 -->
+
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#content -->
+
+    {% endblock %}
+    </body>
+    {% block footer %}
+    {{ super() }}
+    {% endblock %}
+    </html>

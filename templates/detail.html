@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% extends 'base.html' %}
+    {% block header %}
+    {{ super() }}
+    {% endblock %}
+    {% block nav %}
+    {{ super() }}
+    {% endblock %}
+
+    <body>
+    {% block content %}
+    {{ super() }}
+
+    <div id="all">
+
+        <div id="content">
+            <div class="container">
+
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li><a href="#">Главная</a>
+                        </li>
+                        <li><a href="#">Категории</a>
+                        </li>
+                        <li>{{ title }}</li>
+                    </ul>
+
+                </div>
+
+                <div class="col-md-3">
+                    <!-- *** MENUS AND FILTERS ***
+ _________________________________________________________ -->
+                    <div class="panel panel-default sidebar-menu">
+
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Категории</h3>
+                        </div>
+
+                        <div class="panel-body">
+                            {% for nav in nav_bar %}
+                            <ul class="nav nav-pills nav-stacked category-menu">
+                                <li>
+                                    <strong>{{nav.main}}</strong>
+                                    {% for s in nav.sub%}
+                                    <ul>
+                                        <li><a href="{{ url_for('category', cat=s) }}">{{ s }}</a>
+                                        </li>
+                                    </ul>
+                                    {% endfor%}
+                                </li>
+                            </ul>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    
+
+                    <!-- *** MENUS AND FILTERS END *** -->
+
+                </div>
+
+                <div class="col-md-9">
+
+                    <div class="row" id="productMain">
+                        <div class="col-sm-6">
+                            <div id="mainImage">
+                                <img src="data:;base64,{{ image }}" alt="" class="img-responsive">
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="box">
+                                <h1 class="text-center">{{ title }}</h1>
+                                <p class="price">{{ price }} ₸</p>
+                                {% for msg in get_flashed_messages() %}
+                                <p>{{ msg }}</p>
+                                {% endfor %}
+
+                                <p class="text-center buttons">
+                                    <form action="{{ url_for('detail', book_id=book_id)}}" method="post">
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Добавить в корзину</button>
+                                        </div>
+                                    </form>
+                                    <br>
+                                    <div class="text-center">
+                                        <a href="{{ url_for('checkout') }}" class="btn btn-default"><i class="fa fa-heart"></i> Оформить заказ</a>
+                                    </div>
+                                </p>
+
+
+                            </div>
+
+                            <div class="row" id="thumbs">
+                                <div class="col-xs-4">
+                                    <a href="data:;base64,{{ image }}" class="thumb">
+                                        <img src="data:;base64,{{ image }}" alt="" class="img-responsive">
+                                    </a>
+                                </div>
+                                <div class="col-xs-4">
+                                    <a href="data:;base64,{{ image }}" class="thumb">
+                                        <img src="data:;base64,{{ image }}" alt="" class="img-responsive">
+                                    </a>
+                                </div>
+                                <div class="col-xs-4">
+                                    <a href="data:;base64,{{ image }}" class="thumb">
+                                        <img src="data:;base64,{{ image }}" alt="" class="img-responsive">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="box" id="details">
+                        <p>
+                            <h4>Описание</h4>
+                            <p>{{ description }}</p>
+                        </p>
+                    </div>
+
+                    <div class="row same-height-row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="box same-height">
+                                <h3>Посмотрите также новинки недели</h3>
+                            </div>
+                        </div>
+
+                        {% for i in range(3) %}
+                        <div class="col-md-3 col-sm-6">
+                            <div class="product same-height">
+                                <div class="flip-container">
+                                    <div class="flipper">
+                                        <div class="front">
+                                            <a href="{{ url_for('detail', book_id=new_books[i][0]) }}">
+                                                <img src="data:;base64,{{ new_books[i][3] }}" alt="" class="img-responsive">
+                                            </a>
+                                        </div>
+                                        <div class="back">
+                                            <a href="{{ url_for('detail', book_id=new_books[i][0]) }}">
+                                                <img src="data:;base64,{{ new_books[i][3] }}" alt="" class="img-responsive">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="{{ url_for('detail', book_id=new_books[i][0]) }}" class="invisible">
+                                    <img src="data:;base64,{{ new_books[i][3] }}" alt="" class="img-responsive">
+                                </a>
+                                <div class="text">
+                                    <h3><a href="{{ url_for('detail', book_id=new_books[i][0]) }}">{{ new_books[i][1] }}</a></h3>
+                                    <p class="price">{{ new_books[i][2] }}</p>
+                                </div>
+                            </div>
+                            <!-- /.product -->
+                        </div>
+                        {% endfor %}
+
+                    </div>
+
+
+                </div>
+                <!-- /.col-md-9 -->
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#content -->
+
+    {% endblock %}
+    </body>
+    {% block footer %}
+    {{ super() }}
+    {% endblock %}
+    </html>

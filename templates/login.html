@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% extends 'base.html' %}
+    {% block header %}
+    {{ super() }}
+    {% endblock %}
+    {% block nav %}
+    {{ super() }}
+    {% endblock %}
+
+    <body>
+    {% block content %}
+    {{ super() }}
+
+    <div id="all">
+
+        <div id="content">
+            <div class="container">
+
+                <div class="col-md-12">
+
+                    <ul class="breadcrumb">
+                        <li><a href="#">Главная</a>
+                        </li>
+                        <li>Вход</li>
+                    </ul>
+
+                </div>
+
+                <div class="col-md-6">
+                    <div class="box">
+                        <h1>Вход</h1>
+
+                        <p class="lead">Уже являетесь нашим клиентом?</p>
+                        <p class="text-muted">Войдите, чтобы добавлять книги в корзину и делать заказы.</p>
+
+                        <hr>
+
+                        <form action="{{ url_for('login')}}" method="post">
+                            {% for cat, msg in get_flashed_messages(True) %}
+                            <div class="flash {{cat}}"><p>{{ msg }}</p></div>
+                            {% endfor %}
+                            {{ form.hidden_tag() }}
+                            <div class="form-group">
+                                <p>{{ form.e_mail.label() }} </p> 
+                                {% if form.e_mail.errors %}
+                                    {{ form.e_mail(class="invalid") }}
+                                <span class="invalid-feedback">
+                                    {% for e in form.e_mail.errors %}
+                                    {{ e }}
+                                    {% endfor %}
+                                </span>
+                                {% else %}
+                                    {{ form.e_mail(class="form-control") }}
+                                {% endif %}
+                                
+                                <p>{{ form.password.label() }} </p> 
+                                {% if form.password.errors %}
+                                    {{ form.password(class="invalid") }}
+                                <span class="invalid-feedback">
+                                    {% for e in form.password.errors %}
+                                    {{ e }}
+                                    {% endfor %}
+                                </span>
+                                {% else %}
+                                    {{ form.password(class="form-control") }}
+                                {% endif %}
+                            </div>
+                            <div class="text-center">
+                                <i class="fa fa-sign-in"></i>{{ form.submit(class="btn btn-primary") }}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#content -->
+
+
+    {% endblock %}
+    </body>
+    {% block footer %}
+    {{ super() }}
+    {% endblock %}
+    </html>

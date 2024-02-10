@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% extends 'base.html' %}
+    {% block header %}
+    {{ super() }}
+    {% endblock %}
+    {% block nav %}
+    {{ super() }}
+    {% endblock %}
+
+    <body>
+    {% block content %}
+    {{ super() }}
+
+    <div id="all">
+
+        <div id="content">
+            <div class="container">
+
+                <div class="col-md-12">
+
+                    <ul class="breadcrumb">
+                        <li><a href="#">Главная</a>
+                        </li>
+                        <li>Регистрация</li>
+                    </ul>
+
+                </div>
+
+                <div class="col-md-6">
+                    <div class="box">
+                        <h1>Регистрация</h1>
+
+                        <p class="lead">Еще не являетесь нашим зарегистрированным клиентом?</p>
+                        <p>При регистрации вам откроется возможность фантастических скидок и многого другого! Весь процесс не займет у вас больше минуты!</p>
+                        <p class="text-muted">Если у вас есть какие-либо вопросы, пожалуйста, <a href="{{ url_for('contact') }}">свяжитесь с нами</a>, наш центр обслуживания клиентов работает для вас 24/7.</p>
+
+                        <hr>
+
+
+                        <form action="{{ url_for('register') }}" method="post">
+                            {% for cat, msg in get_flashed_messages(True) %}
+                            <div class="flash {{cat}}"><p>{{ msg }}</p></div>
+                            {% endfor %}
+                            <div class="form-group">
+                            {{ form.hidden_tag() }}
+
+                                <p>{{ form.first_name.label() }} </p> 
+                                {% if form.first_name.errors %}
+                                    {{ form.first_name(class="invalid") }}
+                                <span class="invalid-feedback">
+                                    {% for e in form.first_name.errors %}
+                                    {{ e }}
+                                    {% endfor %}
+                                </span>
+                                {% else %}
+                                    {{ form.first_name(class="form-control") }}
+                                {% endif %}
+
+                                <p>{{ form.last_name.label() }} </p> 
+                                {% if form.last_name.errors %}
+                                    {{ form.last_name(class="invalid") }}
+                                <span class="invalid-feedback">
+                                    {% for e in form.last_name.errors %}
+                                    {{ e }}
+                                    {% endfor %}
+                                </span>
+                                {% else %}
+                                    {{ form.last_name(class="form-control") }}
+                                {% endif %}
+
+                                <p>{{ form.e_mail.label() }} </p> 
+                                {% if form.e_mail.errors %}
+                                    {{ form.e_mail(class="invalid") }}
+                                <span class="invalid-feedback">
+                                    {% for e in form.e_mail.errors %}
+                                    {{ e }}
+                                    {% endfor %}
+                                </span>
+                                {% else %}
+                                    {{ form.e_mail(class="form-control") }}
+                                {% endif %}
+
+                                <p>{{ form.password.label() }} </p> 
+                                {% if form.password.errors %}
+                                    {{ form.password(class="invalid") }}
+                                <span class="invalid-feedback">
+                                    {% for e in form.password.errors %}
+                                    {{ e }}
+                                    {% endfor %}
+                                </span>
+                                {% else %}
+                                    {{ form.password(class="form-control") }}
+                                {% endif %}
+
+                                <p>{{ form.password2.label() }} </p> 
+                                {% if form.password2.errors %}
+                                    {{ form.password2(class="invalid") }}
+                                <span class="invalid-feedback">
+                                    {% for e in form.password2.errors %}
+                                    {{ e }}
+                                    {% endfor %}
+                                </span>
+                                {% else %}
+                                    {{ form.password2(class="form-control") }}
+                                {% endif %}
+
+                                <div class="text-center">
+                                    <i class="fa fa-user-md"></i>{{ form.submit(class="btn btn-primary") }}
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#content -->
+
+
+    {% endblock %}
+    </body>
+    {% block footer %}
+    {{ super() }}
+    {% endblock %}
+    </html>

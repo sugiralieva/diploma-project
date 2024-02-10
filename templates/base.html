@@ -1,0 +1,340 @@
+{% block header %}
+
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="robots" content="all,follow">
+    <meta name="googlebot" content="index,follow,snippet,archive">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Obaju e-commerce template">
+    <meta name="author" content="Ondrej Svestka | ondrejsvestka.cz">
+    <meta name="keywords" content="">
+
+    <title>
+        BookStore
+    </title>
+
+    <meta name="keywords" content="">
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100' rel='stylesheet' type='text/css'>
+
+    <!-- styles -->
+    <link href="{{ url_for('static', filename='css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/animate.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/owl.carousel.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/owl.theme.css') }}" rel="stylesheet">
+
+    <!-- theme stylesheet -->
+    <link href="{{ url_for('static', filename='css/style.blue.css') }}" rel="stylesheet" id="theme-stylesheet">
+
+    <!-- your stylesheet with modifications -->
+    <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
+
+    <script src="{{ url_for('static', filename='js/respond.min.js') }}"></script>
+
+    <link rel="shortcut icon" href="favicon.png">
+
+
+
+</head>
+{% endblock %}
+
+{% block nav %}
+
+
+    <!-- *** TOPBAR ***
+ _________________________________________________________ -->
+    <div id="top">
+        <div class="container">
+            <div class="col-md-6 offer" data-animate="fadeInDown">
+            </div>
+            <div class="col-md-6" data-animate="fadeInDown">
+                <ul class="menu">
+                    <li>
+                            {% if current_user.is_authenticated %}
+                            <a href="{{ url_for('customer_account') }}">Мой аккаунт</a>
+                            {% else %}
+                            <a href="{{ url_for('login') }}">Войти</a>
+                            {% endif %}
+                        
+                    </li>
+                    <li><a href="{{ url_for('register') }}">Регистрация</a>
+                    </li>
+                    <li><a href="{{ url_for('contact') }}">Контакты</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- *** TOP BAR END *** -->
+
+    <!-- *** NAVBAR ***
+ _________________________________________________________ -->
+
+    <div class="navbar navbar-default yamm" role="navigation" id="navbar">
+        <div class="container">
+            <div class="navbar-header">
+
+                <a class="navbar-brand home" href="{{ url_for('index') }}" data-animate-hover="bounce">
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="logo" class="hidden-xs">
+                    <img src="{{ url_for('static', filename='img/logo-small.png') }}" alt="logo" class="visible-xs"><span class="sr-only">Logo - go to homepage</span>
+                </a>
+                <div class="navbar-buttons">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="fa fa-align-justify"></i>
+                    </button>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#search">
+                        <span class="sr-only">Toggle search</span>
+                        <i class="fa fa-search"></i>
+                    </button>
+                    <a class="btn btn-default navbar-toggle" href="{{ url_for('cart') }}">
+                        <i class="fa fa-shopping-cart"></i>  <span class="hidden-xs">корзина</span>
+                    </a>
+                </div>
+            </div>
+            <!--/.navbar-header -->
+
+            <div class="navbar-collapse collapse" id="navigation">
+
+                <ul class="nav navbar-nav navbar-left">
+                    <li class="active"><a href="{{ url_for('index') }}">Главная</a>
+                    </li>
+                    <li class="dropdown yamm-fw">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">Магазин <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="yamm-content">
+                                    <div class="row">
+                                        {% for nav in nav_bar %}
+                                        <div class="col-sm-3">
+                                            <h5>{{ nav.main}}</h5>
+                                            {% for s in nav.sub %}
+                                            <ul>
+                                                <li><a href="{{ url_for('category', cat=s ) }}">{{ s }}</a>
+                                                </li>
+                                            </ul>
+                                            {% endfor%}
+                                        </div>
+                                        {% endfor %}
+                                        
+                                    </div>
+                                </div>
+                                <!-- /.yamm-content -->
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown yamm-fw">
+                        <a href="{{ url_for('blog') }}" class="dropdown-toggle"  data-hover="dropdown" data-delay="200">Блог </a>
+                    </li>
+
+                    <li class="dropdown yamm-fw">
+                        <a href="{{ url_for('contact') }}" class="dropdown-toggle"  data-hover="dropdown" data-delay="200">О нас </a>
+                    </li>
+                </ul>
+
+            </div>
+            <!--/.nav-collapse -->
+
+            <div class="navbar-buttons">
+
+                <div class="navbar-collapse collapse right" id="basket-overview">
+                    <a href="{{ url_for('cart') }}" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span class="hidden-sm">корзина</span></a>
+                </div>
+                <!--/.nav-collapse -->
+
+                <div class="navbar-collapse collapse right" id="search-not-mobile">
+                    <button type="button" class="btn navbar-btn btn-primary" data-toggle="collapse" data-target="#search">
+                        <span class="sr-only">Toggle search</span>
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="collapse clearfix" id="search">
+
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Поиск">
+                        <span class="input-group-btn">
+
+			<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+
+		    </span>
+                    </div>
+                </form>
+
+            </div>
+            <!--/.nav-collapse -->
+
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /#navbar -->
+
+    <!-- *** NAVBAR END *** -->
+
+{% endblock %}
+{% block content %}
+{% endblock %}
+
+{% block footer %}
+        <!-- *** FOOTER ***
+ _________________________________________________________ -->
+ <div id="footer" data-animate="fadeInUp">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <h4>Контакты</h4>
+
+                <ul>
+                    <li><a href="{{ url_for('contact') }}">О нас</a>
+                    </li>
+                    <li><a href="{{ url_for('faq') }}">Часто задаваемые вопросы</a>
+                    </li>
+                    <li><a href="{{ url_for('contact') }}">Связаться с нами</a>
+                    </li>
+                </ul>
+
+                <hr>
+
+                <h4>Секция пользователя</h4>
+
+                <ul>
+                    <li><a href="{{ url_for('login') }}">Войти</a>
+                    </li>
+                    <li><a href="{{ url_for('register') }}">Зарегистрироваться</a>
+                    </li>
+                </ul>
+
+                <hr class="hidden-md hidden-lg hidden-sm">
+
+            </div>
+            <!-- /.col-md-3 -->
+
+            <div class="col-md-3 col-sm-6">
+
+                <h4>Категории</h4>
+
+                <ul>
+                    {% for nav in nav_bar %}
+                    <li><a href="{{ url_for('category', cat=nav.main) }}">{{ nav.main }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                <hr class="hidden-md hidden-lg">
+
+            </div>
+            <!-- /.col-md-3 -->
+
+            <div class="col-md-3 col-sm-6">
+
+                <h4>Как нас найти</h4>
+
+                <p><strong>BookStore Ltd.</strong>
+                    <br>улица Абая, 76
+                    <br>020000
+                    <br>Кокшетау
+                    <br>Казахстан
+                </p>
+
+                <a href="{{ url_for('contact') }}">Перейти к странице контакты</a>
+
+                <hr class="hidden-md hidden-lg">
+
+            </div>
+            <!-- /.col-md-3 -->
+
+
+
+            <div class="col-md-3 col-sm-6">
+
+                <h4>Будьте в курсе всех событий</h4>
+
+                <p class="text-muted">Подпишитесь на наш блог и аккаунты в социальных сетях.</p>
+
+                <form>
+                    <div class="input-group">
+
+                        <input type="email" class="form-control" placeholder="Email">
+
+                        <span class="input-group-btn">
+
+        <button class="btn btn-default" type="button">Подписаться!</button>
+
+    </span>
+
+                    </div>
+                    <!-- /input-group -->
+                </form>
+
+                <hr>
+
+                <p class="social">
+                    <a href="#" class="facebook external" data-animate-hover="shake"><i class="fa fa-facebook"></i></a>
+                    <a href="#" class="twitter external" data-animate-hover="shake"><i class="fa fa-twitter"></i></a>
+                    <a href="#" class="instagram external" data-animate-hover="shake"><i class="fa fa-instagram"></i></a>
+                    <a href="#" class="gplus external" data-animate-hover="shake"><i class="fa fa-google-plus"></i></a>
+                    <a href="#" class="email external" data-animate-hover="shake"><i class="fa fa-envelope"></i></a>
+                </p>
+
+
+            </div>
+            <!-- /.col-md-3 -->
+
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+</div>
+<!-- /#footer -->
+
+<!-- *** FOOTER END *** -->
+
+
+
+
+<!-- *** COPYRIGHT ***
+_________________________________________________________ -->
+<div id="copyright">
+    <div class="container">
+        <div class="col-md-6">
+            <p class="pull-left">© 2024 Zhansaya.</p>
+
+        </div>
+        <div class="col-md-6">
+            <p class="pull-right">Template by <a href="http://bootstrapious.com/e-commerce-templates">Bootstrap Ecommerce Templates</a> with support from <a href="http://kakusei.cz">Designové předměty</a> 
+                <!-- Not removing these links is part of the licence conditions of the template. Thanks for understanding :) -->
+            </p>
+        </div>
+    </div>
+</div>
+<!-- *** COPYRIGHT END *** -->
+
+
+
+</div>
+<!-- /#all -->
+
+
+
+
+<!-- *** SCRIPTS TO INCLUDE ***
+_________________________________________________________ -->
+<script src="{{ url_for('static', filename='js/jquery-1.11.0.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.cookie.js') }}"></script>
+<script src="{{ url_for('static', filename='js/waypoints.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/modernizr.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap-hover-dropdown.js') }}"></script>
+<script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/front.js') }}"></script>
+
+{% endblock %}
