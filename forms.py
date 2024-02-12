@@ -31,10 +31,10 @@ class Order(FlaskForm):
                                                   Length(min=2, max=20, message='Имя должно состоять от 2 до 20 символов')])
     last_name = StringField('Фамилия: ', validators=[DataRequired(),
                                                      Length(min=2, max=20, message='Фамилия должна состоять от 2 до 20 символов')])
-    zip_address = IntegerField('Индекс: ', validators=[DataRequired(), Length(min=4, max=10)])
+    zip_address = StringField('Индекс: ', validators=[DataRequired(), Length(min=4, max=10)])
     street = StringField('Улица, дом: ', validators=[DataRequired(), Length(min=4, max=50)])
     city = StringField('Город: ', validators=[DataRequired(), Length(min=2, max=20)])
     country = StringField('Страна: ', validators=[DataRequired(), Length(min=4, max=20)])
-    telephone = IntegerField('Телефон: ', validators=[DataRequired(), Length(min=6, max=20)])
+    phone = StringField('Телефон: ', validators=[DataRequired(), Length(min=6, max=20)])
     e_mail = StringField('Email: ', validators=[Email(message='Некорректный email')])
     submit = SubmitField('Заказать')

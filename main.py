@@ -115,16 +115,24 @@ def cart():
     if request.method == 'POST':
         dbase.delete_book_from_cart(request.form.get('delete'), current_user.get_id())
         return redirect(url_for('cart'))
-    print(request.form.get('delete'))
     return render_template('cart.html', nav_bar=nav_bar, books_in_cart=books_in_cart, total=total)
 
 
 @app.route('/checkout', methods=['GET', 'POST'])
 def checkout():
     books_in_cart = dbase.get_all_books_in_cart(current_user.get_id())
+    order = ''
+    for book in books_in_cart:
+        order = order + ' ' + str(book[5])
+
     prices = [int(price[4]) for price in books_in_cart]
     total = reduce(lambda x, y: x + y, prices, 0)
     form = Order()
+    if form.validate_on_submit():
+        dbase.create_table_orders()
+        dbase.add_order(current_user.get_id(), form.first_name.data, form.last_name.data, form.zip_address.data, form.street.data, form.city.data, form.country.data, form.phone.data, form.e_mail.data, order)
+        print(order)
+        return redirect(url_for('customer_order'))
     return render_template('checkout.html', nav_bar=nav_bar, total=total, form=form)
 
 
@@ -201,11 +209,6 @@ def logout():
     logout_user()
     flash("Вы вышли из аккаунта", "success")
     return redirect(url_for('login'))
-
-
-@app.route('/faq', methods=['GET', 'POST'])
-def faq():
-    return render_template('faq.html', nav_bar=nav_bar)
 
 
 @app.route('/contact', methods=['GET', 'POST'])

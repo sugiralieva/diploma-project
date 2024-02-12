@@ -175,6 +175,7 @@ WHERE cart.user_id=?''', (user_id,))
         except sq.Error as e:
             print('Ошибка подключения к БД' + str(e))
 
+
     def delete_book_from_cart(self, book_id, user_id):
         try:
             self.cursor.execute('DELETE FROM cart WHERE book_id=? AND user_id=?', (book_id, user_id))
@@ -182,6 +183,31 @@ WHERE cart.user_id=?''', (user_id,))
         except sq.Error as e:
             print('Ошибка удаления книги из корзины' + str(e))
 
+    def create_table_orders(self):
+        try:
+            self.cursor.execute('''
+CREATE TABLE IF NOT EXISTS orders(
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+user_id INTEGER NOT NULL,
+first_name TEXT NOT NULL,
+last_name TEXT NOT NULL,
+zip TEXT NOT NULL,
+street TEXT NOT NULL,
+city TEXT NOT NULL,
+country TEXT NOT NULL,
+phone TEXT NOT NULL,
+e_mail TEXT NOT NULL,
+customer_order TEXT NOT NULL)''')
+            self.db.commit()
+        except sq.Error as e:
+            print('Ошибка создания таблицы orders' + str(e))
+
+    def add_order(self, user_id, first_name, last_name, zip_address, street, city, country, phone, e_mail, order):
+        try:
+            self.cursor.execute('INSERT INTO orders(user_id, first_name, last_name, zip, street, city, country, phone, e_mail, customer_order) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', (user_id, first_name, last_name, zip_address, street, city, country, phone, e_mail, order))
+            self.db.commit()
+        except sq.Error as e:
+            print('Ошибка записи данных в БД' + str(e))
 
 
 

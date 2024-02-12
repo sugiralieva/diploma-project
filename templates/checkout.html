@@ -20,20 +20,39 @@
                 <div class="col-md-9" id="checkout">
 
                     <div class="box">
-                        <form method="post" action="customer-order.html">
+                        <form method="post" action="{{url_for('checkout') }}">
+                            {{ form.hidden_tag() }}
                             <h1>Оформление заказа</h1>
                             <div class="content">
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="firstname">Имя</label>
-                                            <input type="text" class="form-control" id="firstname">
+                                            <p>{{ form.first_name.label() }} </p> 
+                                            {% if form.first_name.errors %}
+                                                {{ form.first_name(class="invalid") }}
+                                            <span class="invalid-feedback">
+                                                {% for e in form.first_name.errors %}
+                                                {{ e }}
+                                                {% endfor %}
+                                            </span>
+                                            {% else %}
+                                                {{ form.first_name(class="form-control") }}
+                                            {% endif %}
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="lastname">Фамилия</label>
-                                            <input type="text" class="form-control" id="lastname">
+                                            <p>{{ form.last_name.label() }} </p> 
+                                            {% if form.last_name.errors %}
+                                                {{ form.last_name(class="invalid") }}
+                                            <span class="invalid-feedback">
+                                                {% for e in form.last_name.errors %}
+                                                {{ e }}
+                                                {% endfor %}
+                                            </span>
+                                            {% else %}
+                                                {{ form.last_name(class="form-control") }}
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -43,39 +62,93 @@
                                 <div class="row">
                                     <div class="col-sm-6 col-md-3">
                                         <div class="form-group">
-                                            <label for="zip">Индекс</label>
-                                            <input type="text" class="form-control" id="city">
+                                            <p>{{ form.zip_address.label() }} </p> 
+                                            {% if form.zip_address.errors %}
+                                                {{ form.zip_address(class="invalid") }}
+                                            <span class="invalid-feedback">
+                                                {% for e in form.zip_address.errors %}
+                                                {{ e }}
+                                                {% endfor %}
+                                            </span>
+                                            {% else %}
+                                                {{ form.zip_address(class="form-control") }}
+                                            {% endif %}
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-3">
                                         <div class="form-group">
-                                            <label for="street">Улица, дом</label>
-                                            <input type="text" class="form-control" id="zip">
+                                            <p>{{ form.street.label() }} </p> 
+                                            {% if form.street.errors %}
+                                                {{ form.street(class="invalid") }}
+                                            <span class="invalid-feedback">
+                                                {% for e in form.street.errors %}
+                                                {{ e }}
+                                                {% endfor %}
+                                            </span>
+                                            {% else %}
+                                                {{ form.street(class="form-control") }}
+                                            {% endif %}
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-3">
                                         <div class="form-group">
-                                            <label for="city">Город</label>
-                                            <input type="text" class="form-control" id="state">
+                                            <p>{{ form.city.label() }} </p> 
+                                            {% if form.city.errors %}
+                                                {{ form.city(class="invalid") }}
+                                            <span class="invalid-feedback">
+                                                {% for e in form.city.errors %}
+                                                {{ e }}
+                                                {% endfor %}
+                                            </span>
+                                            {% else %}
+                                                {{ form.city(class="form-control") }}
+                                            {% endif %}
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-3">
                                         <div class="form-group">
-                                            <label for="country">Страна</label>
-                                            <input type="text" class="form-control" id="country">
+                                            <p>{{ form.country.label() }} </p> 
+                                            {% if form.country.errors %}
+                                                {{ form.country(class="invalid") }}
+                                            <span class="invalid-feedback">
+                                                {% for e in form.country.errors %}
+                                                {{ e }}
+                                                {% endfor %}
+                                            </span>
+                                            {% else %}
+                                                {{ form.country(class="form-control") }}
+                                            {% endif %}
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="phone">Телефон</label>
-                                            <input type="text" class="form-control" id="phone">
+                                            <p>{{ form.phone.label() }} </p> 
+                                            {% if form.phone.errors %}
+                                                {{ form.phone(class="invalid") }}
+                                            <span class="invalid-feedback">
+                                                {% for e in form.phone.errors %}
+                                                {{ e }}
+                                                {% endfor %}
+                                            </span>
+                                            {% else %}
+                                                {{ form.phone(class="form-control") }}
+                                            {% endif %}
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="email">Email</label>
-                                            <input type="text" class="form-control" id="email">
+                                            <p>{{ form.e_mail.label() }} </p> 
+                                            {% if form.e_mail.errors %}
+                                                {{ form.e_mail(class="invalid") }}
+                                            <span class="invalid-feedback">
+                                                {% for e in form.e_mail.errors %}
+                                                {{ e }}
+                                                {% endfor %}
+                                            </span>
+                                            {% else %}
+                                                {{ form.e_mail(class="form-control") }}
+                                            {% endif %}
                                         </div>
                                     </div>
 
@@ -88,7 +161,7 @@
                                     <a href="{{ url_for('cart') }}" class="btn btn-default"><i class="fa fa-chevron-left"></i>Вернуться в корзину</a>
                                 </div>
                                 <div class="pull-right">
-                                    <button type="submit" class="btn btn-primary">Заказать<i class="fa fa-chevron-right"></i>
+                                    {{ form.submit(class="btn btn-primary") }}<i class="fa fa-chevron-right"></i>
                                     </button>
                                 </div>
                             </div>
