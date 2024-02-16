@@ -209,15 +209,35 @@ customer_order TEXT NOT NULL)''')
         except sq.Error as e:
             print('Ошибка записи данных в БД' + str(e))
 
-    def get_posts_index(self):
+    def get_two_posts(self):
         # with sq.connect(self.db) as con:
         #     self.cursor = con.cursor()
         try:
-            self.cursor.execute('SELECT title, author, short_post FROM blog LIMIT 2')
+            self.cursor.execute('SELECT id, title, author, short_post FROM blog LIMIT 2')
             res = self.cursor.fetchall()
             return res
         except sq.Error as e:
             print('Ошибка получения данных из blog' + str(e))
+
+    def get_all_posts(self):
+        # with sq.connect(self.db) as con:
+        #     self.cursor = con.cursor()
+        try:
+            self.cursor.execute('SELECT id, title, author, image, short_post, publication_date FROM blog')
+            res = self.cursor.fetchall()
+            return res
+        except sq.Error as e:
+            print('Ошибка получения данных из blog' + str(e))
+
+    def get_post_by_id(self, post_id):
+        try:
+            self.cursor.execute('SELECT title, author, post, image, publication_date FROM blog WHERE id=? LIMIT 1', (post_id,))
+            res = self.cursor.fetchone()
+            if res:
+                return res
+        except sq.Error as e:
+            print('Ошибка получения поста из БД '+ str(e))
+        return (False, False, False, False, False)
 
 
 

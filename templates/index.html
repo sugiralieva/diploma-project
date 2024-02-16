@@ -176,12 +176,12 @@
                         {% for post in posts %}
                         <div class="col-sm-6">
                             <div class="post">
-                                <h4><a href="{{ url_for('post') }}">{{ post[0] }}</a></h4>
-                                <p class="author-category">Автор: {{ post[1] }}</a>
+                                <h4><a href="{{ url_for('post', post_id=post[0]) }}">{{ post[1] }}</a></h4>
+                                <p class="author-category">Автор: {{ post[2] }}</a>
                                 </p>
                                 <hr>
-                                <p class="intro">{{ post[2] }}</p>
-                                <p class="read-more"><a href="{{ url_for('post') }}" class="btn btn-primary">Читать полностью</a>
+                                <p class="intro">{{ post[3] }}</p>
+                                <p class="read-more"><a href="{{ url_for('post', post_id=post[0]) }}" class="btn btn-primary">Читать полностью</a>
                                 </p>
                             </div>
                         </div>

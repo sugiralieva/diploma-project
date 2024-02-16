@@ -68,7 +68,7 @@ def index():
     new_books = list(map(lambda i: list(i), new_books))
     for image in new_books:
         image[3] = b64encode(image[3]).decode("utf-8")
-    posts = dbase.get_posts_index()
+    posts = dbase.get_two_posts()
     return render_template('index.html', nav_bar=nav_bar, new_books=new_books, posts=posts)
 
 
@@ -144,12 +144,19 @@ def customer_order():
 
 @app.route('/blog', methods=['GET', 'POST'])
 def blog():
-    return render_template('blog.html', nav_bar=nav_bar)
+    posts = dbase.get_all_posts()
+    posts = list(map(lambda i: list(i), posts))
+    for image in posts:
+        image[3] = b64encode(image[3]).decode("utf-8")
+
+    return render_template('blog.html', nav_bar=nav_bar, posts=posts)
 
 
-@app.route('/post', methods=['GET', 'POST'])
-def post():
-    return render_template('post.html', nav_bar=nav_bar)
+@app.route('/post/<int:post_id>', methods=['GET', 'POST'])
+def post(post_id):
+    title, author, post, image, publication_date = dbase.get_post_by_id(post_id)
+    image = b64encode(image).decode("utf-8")
+    return render_template('post.html', nav_bar=nav_bar, post_id=post_id, title=title, author=author, post=post, image=image, publication_date=publication_date)
 
 
 @app.route('/register', methods=['GET', 'POST'])
