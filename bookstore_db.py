@@ -209,8 +209,18 @@ customer_order TEXT NOT NULL)''')
         except sq.Error as e:
             print('Ошибка записи данных в БД' + str(e))
 
+    def get_posts_index(self):
+        # with sq.connect(self.db) as con:
+        #     self.cursor = con.cursor()
+        try:
+            self.cursor.execute('SELECT title, author, short_post FROM blog LIMIT 2')
+            res = self.cursor.fetchall()
+            return res
+        except sq.Error as e:
+            print('Ошибка получения данных из blog' + str(e))
+
 
 
 # db = BookStoreDB('bookstore.db')
-# user = db.get_all_books_in_cart(1)
+# user = db.get_posts_index()
 # print(user)

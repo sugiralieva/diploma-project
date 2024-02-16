@@ -2,7 +2,7 @@ from base64 import b64encode
 import datetime
 from functools import reduce
 from flask import Flask
-from flask import render_template, url_for, request, flash, session, redirect, abort, g, sessions
+from flask import render_template, url_for, request, flash, session, redirect, abort, g
 from flask_paginate import Pagination, get_page_parameter
 import sqlite3 as sq
 import os
@@ -68,7 +68,8 @@ def index():
     new_books = list(map(lambda i: list(i), new_books))
     for image in new_books:
         image[3] = b64encode(image[3]).decode("utf-8")
-    return render_template('index.html', nav_bar=nav_bar, new_books=new_books)
+    posts = dbase.get_posts_index()
+    return render_template('index.html', nav_bar=nav_bar, new_books=new_books, posts=posts)
 
 
 @app.route('/detail/<int:book_id>', methods=['GET', 'POST'])

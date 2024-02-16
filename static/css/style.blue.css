@@ -551,7 +551,6 @@ h1 {
     max-width: 100%;
   }
 }
-.product .img-responsive {height: 300px; max-width: fit-content;}
 #content .product .text {
   padding: 10px 10px 0;
 }
@@ -1686,7 +1685,7 @@ address {
   font-size: 150%;
 }
 
-
+.product .img-responsive {height: 300px; max-width: fit-content;}
 .invalid {background-color: #ff9898; }
 .invalid-feedback {color: #cc0000;}
 .flash.success {padding: 10px; border: 1px solid #21db56; background: #aeffc5;}
