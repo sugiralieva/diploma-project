@@ -19,10 +19,9 @@
                 <div class="col-md-12">
 
                     <ul class="breadcrumb">
-                        <li><a href="index.html">Главная</a>
+                        <li><a href="{{ url_for('index') }}">Главная</a>
                         </li>
-                        <li><a href="#">Заказы</a>
-                        </li>
+                        <li>Заказы</li>
                     </ul>
 
                 </div>
@@ -39,11 +38,8 @@
                         <div class="panel-body">
 
                             <ul class="nav nav-pills nav-stacked">
-                                <li class="active">
-                                    <a href="{{ url_for('cart') }}"><i class="fa fa-shopping-cart"></i>Моя корзина</a>
-                                </li>
                                 <li>
-                                    <a href="{{ url_for('customer_order') }}"><i class="fa fa-list"></i>Мои заказы</a>
+                                    <a href="{{ url_for('cart') }}"><i class="fa fa-shopping-cart"></i>Моя корзина</a>
                                 </li>
                                 <li>
                                     <a href="{{ url_for('customer_account') }}"><i class="fa fa-user"></i> Мой аккаунт</a>

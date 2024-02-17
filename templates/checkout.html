@@ -27,41 +27,6 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <p>{{ form.first_name.label() }} </p> 
-                                            {% if form.first_name.errors %}
-                                                {{ form.first_name(class="invalid") }}
-                                            <span class="invalid-feedback">
-                                                {% for e in form.first_name.errors %}
-                                                {{ e }}
-                                                {% endfor %}
-                                            </span>
-                                            {% else %}
-                                                {{ form.first_name(class="form-control") }}
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <p>{{ form.last_name.label() }} </p> 
-                                            {% if form.last_name.errors %}
-                                                {{ form.last_name(class="invalid") }}
-                                            <span class="invalid-feedback">
-                                                {% for e in form.last_name.errors %}
-                                                {{ e }}
-                                                {% endfor %}
-                                            </span>
-                                            {% else %}
-                                                {{ form.last_name(class="form-control") }}
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.row -->
-
-
-                                <div class="row">
-                                    <div class="col-sm-6 col-md-3">
-                                        <div class="form-group">
                                             <p>{{ form.zip_address.label() }} </p> 
                                             {% if form.zip_address.errors %}
                                                 {{ form.zip_address(class="invalid") }}
@@ -75,7 +40,7 @@
                                             {% endif %}
                                         </div>
                                     </div>
-                                    <div class="col-sm-6 col-md-3">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <p>{{ form.street.label() }} </p> 
                                             {% if form.street.errors %}
@@ -90,7 +55,7 @@
                                             {% endif %}
                                         </div>
                                     </div>
-                                    <div class="col-sm-6 col-md-3">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <p>{{ form.city.label() }} </p> 
                                             {% if form.city.errors %}
@@ -105,7 +70,7 @@
                                             {% endif %}
                                         </div>
                                     </div>
-                                    <div class="col-sm-6 col-md-3">
+                                    <div class="col-sm-6">
                                         <div class="form-group">
                                             <p>{{ form.country.label() }} </p> 
                                             {% if form.country.errors %}

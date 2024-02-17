@@ -19,87 +19,47 @@
 
                 <div class="col-md-12">
                     <ul class="breadcrumb">
-                        <li><a href="#">Home</a>
+                        <li><a href="{{ url_for('index') }}">Главная</a>
                         </li>
-                        <li>Contact</li>
+                        <li>Контакты</li>
                     </ul>
 
                 </div>
 
-                <div class="col-md-3">
-                    <!-- *** PAGES MENU ***
- _________________________________________________________ -->
-                    <div class="panel panel-default sidebar-menu">
-
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Pages</h3>
-                        </div>
-
-                        <div class="panel-body">
-                            <ul class="nav nav-pills nav-stacked">
-                                <li>
-                                    <a href="text.html">Text page</a>
-                                </li>
-                                <li>
-                                    <a href="contact.html">Contact page</a>
-                                </li>
-                                <li>
-                                    <a href="faq.html">FAQ</a>
-                                </li>
-
-                            </ul>
-
-                        </div>
-                    </div>
-
-                    <!-- *** PAGES MENU END *** -->
-
-
-                    <div class="banner">
-                        <a href="#">
-                            <img src="{{ url_for('static', filename='img/banner.jpg') }}" alt="sales 2014" class="img-responsive">
-                        </a>
-                    </div>
-                </div>
 
                 <div class="col-md-9">
 
 
                     <div class="box" id="contact">
-                        <h1>Contact</h1>
+                        <h1>Контакты</h1>
 
-                        <p class="lead">Are you curious about something? Do you have some kind of problem with our products?</p>
-                        <p>Please feel free to contact us, our customer service center is working for you 24/7.</p>
+                        <p class="lead">Вам что-то интересно? У вас есть какие-то проблемы с нашей продукцией?</p>
+                        <p>Пожалуйста, не стесняйтесь обращаться к нам, наш центр обслуживания клиентов работает для вас 24/7.</p>
 
                         <hr>
 
                         <div class="row">
                             <div class="col-sm-4">
-                                <h3><i class="fa fa-map-marker"></i> Address</h3>
-                                <p>13/25 New Avenue
-                                    <br>New Heaven
-                                    <br>45Y 73J
-                                    <br>England
+                                <h3><i class="fa fa-map-marker"></i> Адрес</h3>
+                                <p>улица Абая, 76
+                                    <br>почтовый индекс: 020000
+                                    <br>город: Кокшетау
                                     <br>
-                                    <strong>Great Britain</strong>
+                                    <strong>страна: Казахстан</strong>
                                 </p>
                             </div>
                             <!-- /.col-sm-4 -->
                             <div class="col-sm-4">
-                                <h3><i class="fa fa-phone"></i> Call center</h3>
-                                <p class="text-muted">This number is toll free if calling from Great Britain otherwise we advise you to use the electronic form of communication.</p>
+                                <h3><i class="fa fa-phone"></i> Call-центр</h3>
+                                <p class="text-muted">Звонок по этому номеру бесплатный, если звонить из Казахстана, в противном случае советуем воспользоваться электронной формой связи.</p>
                                 <p><strong>+33 555 444 333</strong>
                                 </p>
                             </div>
                             <!-- /.col-sm-4 -->
                             <div class="col-sm-4">
-                                <h3><i class="fa fa-envelope"></i> Electronic support</h3>
-                                <p class="text-muted">Please feel free to write an email to us or to use our electronic ticketing system.</p>
-                                <ul>
-                                    <li><strong><a href="mailto:">info@fakeemail.com</a></strong>
-                                    </li>
-                                    <li><strong><a href="#">Ticketio</a></strong> - our ticketing support platform</li>
-                                </ul>
+                                <h3><i class="fa fa-envelope"></i> Электронная поддержка</h3>
+                                <p class="text-muted">Пожалуйста, напишите нам электронное письмо или воспользуйтесь нашей системой электронных билетов.</p>
+                                <strong><a href="mailto:">bookstore@fakeemail.com</a></strong>
                             </div>
                             <!-- /.col-sm-4 -->
                         </div>
@@ -107,53 +67,7 @@
 
                         <hr>
 
-                        <div id="map">
-
-                        </div>
-
-                        <hr>
-                        <h2>Contact form</h2>
-
-                        <form>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="firstname">Firstname</label>
-                                        <input type="text" class="form-control" id="firstname">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="lastname">Lastname</label>
-                                        <input type="text" class="form-control" id="lastname">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input type="text" class="form-control" id="email">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="subject">Subject</label>
-                                        <input type="text" class="form-control" id="subject">
-                                    </div>
-                                </div>
-                                <div class="col-sm-12">
-                                    <div class="form-group">
-                                        <label for="message">Message</label>
-                                        <textarea id="message" class="form-control"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-12 text-center">
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Send message</button>
-
-                                </div>
-                            </div>
-                            <!-- /.row -->
-                        </form>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2385.3039627424296!2d69.37098847658349!3d53.28408987227136!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424c9448cd13e5d7%3A0x9caaffbf26f0dfbe!2sShokan%20Ualikhanov%20Kokshetau%20State%20University%20Main%20Building!5e0!3m2!1sen!2skz!4v1708192707445!5m2!1sen!2skz" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
 
                     </div>

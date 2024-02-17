@@ -34,7 +34,7 @@
 
     <script src="{{ url_for('static', filename='js/respond.min.js') }}"></script>
 
-    <link rel="shortcut icon" href="favicon.png">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}">
 
 
 
@@ -61,8 +61,6 @@
                         
                     </li>
                     <li><a href="{{ url_for('register') }}">Регистрация</a>
-                    </li>
-                    <li><a href="{{ url_for('contact') }}">Контакты</a>
                     </li>
                 </ul>
             </div>
@@ -193,8 +191,6 @@
                 <h4>Контакты</h4>
 
                 <ul>
-                    <li><a href="{{ url_for('contact') }}">О нас</a>
-                    </li>
                     <li><a href="{{ url_for('contact') }}">Связаться с нами</a>
                     </li>
                 </ul>
@@ -221,8 +217,11 @@
 
                 <ul>
                     {% for nav in nav_bar %}
-                    <li><a href="{{ url_for('category', cat=nav.main) }}">{{ nav.main }}</a>
+                    {% for sub in nav.sub %}
+                    <li>
+                        <a href="{{ url_for('category', cat=sub) }}">{{ sub }}</a>
                     </li>
+                    {% endfor %}
                     {% endfor %}
                 </ul>
 
@@ -275,11 +274,9 @@
                 <hr>
 
                 <p class="social">
-                    <a href="#" class="facebook external" data-animate-hover="shake"><i class="fa fa-facebook"></i></a>
-                    <a href="#" class="twitter external" data-animate-hover="shake"><i class="fa fa-twitter"></i></a>
-                    <a href="#" class="instagram external" data-animate-hover="shake"><i class="fa fa-instagram"></i></a>
-                    <a href="#" class="gplus external" data-animate-hover="shake"><i class="fa fa-google-plus"></i></a>
-                    <a href="#" class="email external" data-animate-hover="shake"><i class="fa fa-envelope"></i></a>
+                    <a href="https://www.instagram.com/zhansaya_sugiraliyeva" class="instagram external" data-animate-hover="shake"><i class="fa fa-instagram"></i></a>
+                    <a href="https://www.google.com/intl/ru/gmail/about/" class="gplus external" data-animate-hover="shake"><i class="fa fa-google-plus"></i></a>
+                    <a href="https://www.mail.ru" class="email external" data-animate-hover="shake"><i class="fa fa-envelope"></i></a>
                 </p>
 
 

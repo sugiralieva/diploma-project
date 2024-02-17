@@ -118,7 +118,7 @@ class BookStoreDB:
                 return res
         except sq.Error as e:
             print('Ошибка получения книги из БД '+ str(e))
-        return (False, False, False, False)
+        return False
 
     def get_books_by_category(self, cat, ):
         # получаем список книг для отображения в category.html
@@ -174,6 +174,7 @@ WHERE cart.user_id=?''', (user_id,))
             return res
         except sq.Error as e:
             print('Ошибка подключения к БД' + str(e))
+        return False
 
 
     def delete_book_from_cart(self, book_id, user_id):
@@ -183,14 +184,19 @@ WHERE cart.user_id=?''', (user_id,))
         except sq.Error as e:
             print('Ошибка удаления книги из корзины' + str(e))
 
+    def clear_cart(self):
+        try:
+            self.cursor.execute('DELETE FROM cart')
+            self.db.commit()
+        except sq.Error as e:
+            print('Ошибка подключения к БД' + str(e))
+
     def create_table_orders(self):
         try:
             self.cursor.execute('''
 CREATE TABLE IF NOT EXISTS orders(
 id INTEGER PRIMARY KEY AUTOINCREMENT,
 user_id INTEGER NOT NULL,
-first_name TEXT NOT NULL,
-last_name TEXT NOT NULL,
 zip TEXT NOT NULL,
 street TEXT NOT NULL,
 city TEXT NOT NULL,
@@ -202,9 +208,9 @@ customer_order TEXT NOT NULL)''')
         except sq.Error as e:
             print('Ошибка создания таблицы orders' + str(e))
 
-    def add_order(self, user_id, first_name, last_name, zip_address, street, city, country, phone, e_mail, order):
+    def add_order(self, user_id, zip_address, street, city, country, phone, e_mail, order):
         try:
-            self.cursor.execute('INSERT INTO orders(user_id, first_name, last_name, zip, street, city, country, phone, e_mail, customer_order) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', (user_id, first_name, last_name, zip_address, street, city, country, phone, e_mail, order))
+            self.cursor.execute('INSERT INTO orders(user_id, zip, street, city, country, phone, e_mail, customer_order) VALUES(?, ?, ?, ?, ?, ?, ?, ?)', (user_id, zip_address, street, city, country, phone, e_mail, order))
             self.db.commit()
         except sq.Error as e:
             print('Ошибка записи данных в БД' + str(e))
@@ -215,9 +221,11 @@ customer_order TEXT NOT NULL)''')
         try:
             self.cursor.execute('SELECT id, title, author, short_post FROM blog LIMIT 2')
             res = self.cursor.fetchall()
-            return res
+            if res:
+                return res
         except sq.Error as e:
             print('Ошибка получения данных из blog' + str(e))
+        return False
 
     def get_all_posts(self):
         # with sq.connect(self.db) as con:
@@ -225,9 +233,11 @@ customer_order TEXT NOT NULL)''')
         try:
             self.cursor.execute('SELECT id, title, author, image, short_post, publication_date FROM blog')
             res = self.cursor.fetchall()
-            return res
+            if res:
+                return res
         except sq.Error as e:
             print('Ошибка получения данных из blog' + str(e))
+        return False
 
     def get_post_by_id(self, post_id):
         try:
@@ -237,10 +247,10 @@ customer_order TEXT NOT NULL)''')
                 return res
         except sq.Error as e:
             print('Ошибка получения поста из БД '+ str(e))
-        return (False, False, False, False, False)
+        return False
 
 
 
 # db = BookStoreDB('bookstore.db')
-# user = db.get_posts_index()
+# user = db.get_all_books_in_cart(1)
 # print(user)

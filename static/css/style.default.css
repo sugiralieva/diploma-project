@@ -1670,7 +1670,7 @@ address {
   text-decoration: none;
 }
 
-.product .img-responsive {height: 300px; max-width: fit-content;}
+.product .img-responsive {height: 280px; max-width: fit-content;}
 .invalid {background-color: #ff9898; }
 .invalid-feedback {color: #cc0000;}
 .flash.success {padding: 10px; border: 1px solid #21db56; background: #aeffc5;}

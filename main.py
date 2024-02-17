@@ -73,19 +73,21 @@ def index():
 
 
 @app.route('/detail/<int:book_id>', methods=['GET', 'POST'])
-@login_required
 def detail(book_id):
     dbase.create_table_cart()
     title, price, description, image = dbase.get_book_by_id(book_id)
     image = b64encode(image).decode("utf-8")
 
     if request.method == 'POST':
-        book_ids_from_cart = dbase.get_book_ids_from_cart()
-        if book_id in book_ids_from_cart:
-            dbase.update_quantity_of_books(book_id)
+        if current_user.is_authenticated:
+            book_ids_from_cart = dbase.get_book_ids_from_cart()
+            if book_id in book_ids_from_cart:
+                dbase.update_quantity_of_books(book_id)
+            else:
+                dbase.add_book_to_cart(book_id, 1, current_user.get_id())
+            flash('Добавлено в корзину!')
         else:
-            dbase.add_book_to_cart(book_id, 1, current_user.get_id())
-        flash('Добавлено в корзину!')
+            return redirect(url_for('login'))
 
     new_books = dbase.get_new_books()
     new_books = list(map(lambda i: list(i), new_books))
@@ -131,8 +133,8 @@ def checkout():
     form = Order()
     if form.validate_on_submit():
         dbase.create_table_orders()
-        dbase.add_order(current_user.get_id(), form.first_name.data, form.last_name.data, form.zip_address.data, form.street.data, form.city.data, form.country.data, form.phone.data, form.e_mail.data, order)
-        print(order)
+        dbase.add_order(current_user.get_id(), form.zip_address.data, form.street.data, form.city.data, form.country.data, form.phone.data, form.e_mail.data, order)
+        dbase.clear_cart()
         return redirect(url_for('customer_order'))
     return render_template('checkout.html', nav_bar=nav_bar, total=total, form=form)
 

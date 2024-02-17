@@ -20,7 +20,7 @@
 
                 <div class="col-md-12">
                     <ul class="breadcrumb">
-                        <li><a href="#">Главная</a>
+                        <li><a href="{{ url_for('index') }}">Главная</a>
                         </li>
                         <li>Корзина</li>
                     </ul>
@@ -82,7 +82,11 @@
                                 </div>
                                 <div class="pull-right">
                                     <a href="{{ url_for('cart') }}" class="btn btn-default"><i class="fa fa-refresh"></i> Обновить корзину</a>
-                                    <a href="{{ url_for('checkout') }}" class="btn btn-primary">Перейти к заказу<i class="fa fa-chevron-right"></i></a>
+                                    {% if books_in_cart != [] %}
+                                        <a href="{{ url_for('checkout') }}" class="btn btn-primary">Перейти к заказу<i class="fa fa-chevron-right"></i></a>
+                                    {% else %}
+                                        <p class="btn btn-primary">Перейти к заказу<i class="fa fa-chevron-right"></i></p>
+                                    {% endif %}
                                 </div>
                             </div>
 
