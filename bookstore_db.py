@@ -140,12 +140,12 @@ class BookStoreDB:
         except sq.Error as e:
             print('Ошибка записи данных в БД' + str(e))
 
-    def get_book_ids_from_cart(self):
+    def get_book_ids_from_cart(self, user_id):
         ids = []
         # with sq.connect(self.db) as con:
         #     self.cursor = con.cursor()
         try:
-            self.cursor.execute('SELECT book_id FROM cart')
+            self.cursor.execute('SELECT book_id FROM cart WHERE user_id=?', (user_id,))
             res = self.cursor.fetchall()
             for r in res:
                 ids.append(r[0])
@@ -153,9 +153,9 @@ class BookStoreDB:
         except sq.Error as e:
             print('Ошибка получения book_id' + str(e))
 
-    def update_quantity_of_books(self, book_id):
+    def update_quantity_of_books(self, book_id, user_id):
         try:
-            self.cursor.execute('UPDATE cart SET quantity = quantity+1 WHERE book_id=?', (book_id,))
+            self.cursor.execute('UPDATE cart SET quantity = quantity+1 WHERE book_id=? AND user_id=?', (book_id, user_id))
             self.db.commit()
         except sq.Error as e:
             print('Ошибка обновления количества книг' + str(e))
@@ -184,9 +184,9 @@ WHERE cart.user_id=?''', (user_id,))
         except sq.Error as e:
             print('Ошибка удаления книги из корзины' + str(e))
 
-    def clear_cart(self):
+    def clear_cart_of_user(self, user_id):
         try:
-            self.cursor.execute('DELETE FROM cart')
+            self.cursor.execute('DELETE FROM cart WHERE user_id=?', (user_id,))
             self.db.commit()
         except sq.Error as e:
             print('Ошибка подключения к БД' + str(e))

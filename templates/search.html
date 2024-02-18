@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    {% extends 'base.html' %}
+    {% block header %}
+    {{ super() }}
+    {% endblock %}
+    {% block nav %}
+    {{ super() }}
+    {% endblock %}
+
+    <body>
+    {% block content %}
+    {{ super() }}
+
+    <div id="all">
+
+        <div id="content">
+            <div class="container">
+
+                <div class="col-md-12">
+
+                    <ul class="breadcrumb">
+                        <li><a href="{{ url_for('index') }}">Главная</a>
+                        </li>
+                        <li>Категории</li>
+                    </ul>
+                    
+
+                    <div class="box info-bar">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-4 products-showing">
+                              
+                            </div>
+
+                            <div class="col-sm-12 col-md-8  products-number-sort">
+                                <div class="row">
+                                    <form class="form-inline">
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="products-number">
+                                                <strong>Показать</strong>  <a href="#" class="btn btn-default btn-sm btn-primary">12</a>  <a href="#" class="btn btn-default btn-sm">24</a>  <a href="#" class="btn btn-default btn-sm">все</a> книг(и)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="products-sort-by">
+                                                <strong>Сортировать по категориям</strong>
+                                                <select name="sort-by" class="form-control" onchange="window.location.href = this.options[this.selectedIndex].value">
+                                                    <option selected disabled>Выберите категорию:</option>
+                                                    {% for i in nav_bar %}
+                                                    {% for j in i.sub%}
+                                                    <option value="{{ url_for('category', cat=j) }}">{{ j }}</option>
+                                                    {% endfor %}
+                                                    {% endfor %}
+                                                </select>
+                                                
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row products">
+                        {% for cat in books_in_category %}
+
+                        <div class="col-md-3 col-sm-4">
+                            <div class="product">
+                                
+                                <div class="flip-container">
+                                    <div class="flipper">
+                                        <div class="front">
+                                            <a href="{{ url_for('detail', book_id=cat[0])}}">
+                                                <img src="data:;base64,{{ cat[3] }}" alt="" class="img-responsive">
+                                            </a>
+                                        </div>
+                                        <div class="back">
+                                            <a href="{{ url_for('detail', book_id=cat[0]) }}">
+                                                <img src="data:;base64,{{ cat[3] }}" alt="" class="img-responsive">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="{{ url_for('detail', book_id=cat[0] )}}" class="invisible">
+                                    <img src="data:;base64,{{ cat[3] }}" alt="" class="img-responsive">
+                                </a>
+                                <div class="text">
+                                    <h3><a href="{{ url_for('detail', book_id=cat[0] )}}">{{ cat[1] }}</a></h3>
+                                    <p class="price">{{ cat[2] }} ₸</p>
+                                    <p class="buttons">
+                                        <a href="{{ url_for('detail', book_id=cat[0] )}}" class="btn btn-primary">Подробнее</a>
+                                    </p>
+                                </div>
+                                <!-- /.text -->
+                            </div>
+                            <!-- /.product -->
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                    <!-- /.products -->
+
+                    <div class="pages">
+
+                        <p class="loadMore">
+                            <a href="#" class="btn btn-primary btn-lg"><i class="fa fa-chevron-down"></i> Load more</a>
+                        </p>
+
+                        <ul class="pagination">
+                            <li><a href="#">&laquo;</a>
+                            </li>
+                            <li class="active"><a href="#">1</a>
+                            </li>
+                            <li><a href="#">2</a>
+                            </li>
+                            <li><a href="#">3</a>
+                            </li>
+                            <li><a href="#">4</a>
+                            </li>
+                            <li><a href="#">5</a>
+                            </li>
+                            <li><a href="#">&raquo;</a>
+                            </li>
+                        </ul>
+                    </div>    
+
+
+                </div>
+                <!-- /.col-md-9 -->
+
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#content -->
+
+    {% endblock %}
+    </body>
+    {% block footer %}
+    {{ super() }}
+    {% endblock %}
+    </html>

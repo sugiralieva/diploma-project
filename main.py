@@ -62,13 +62,14 @@ def close_db(error):
         g.link_db.close()
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
     new_books = dbase.get_new_books()
     new_books = list(map(lambda i: list(i), new_books))
     for image in new_books:
         image[3] = b64encode(image[3]).decode("utf-8")
     posts = dbase.get_two_posts()
+
     return render_template('index.html', nav_bar=nav_bar, new_books=new_books, posts=posts)
 
 
@@ -80,9 +81,9 @@ def detail(book_id):
 
     if request.method == 'POST':
         if current_user.is_authenticated:
-            book_ids_from_cart = dbase.get_book_ids_from_cart()
+            book_ids_from_cart = dbase.get_book_ids_from_cart(current_user.get_id())
             if book_id in book_ids_from_cart:
-                dbase.update_quantity_of_books(book_id)
+                dbase.update_quantity_of_books(book_id, current_user.get_id())
             else:
                 dbase.add_book_to_cart(book_id, 1, current_user.get_id())
             flash('Добавлено в корзину!')
@@ -122,6 +123,7 @@ def cart():
 
 
 @app.route('/checkout', methods=['GET', 'POST'])
+@login_required
 def checkout():
     books_in_cart = dbase.get_all_books_in_cart(current_user.get_id())
     order = ''
@@ -134,12 +136,13 @@ def checkout():
     if form.validate_on_submit():
         dbase.create_table_orders()
         dbase.add_order(current_user.get_id(), form.zip_address.data, form.street.data, form.city.data, form.country.data, form.phone.data, form.e_mail.data, order)
-        dbase.clear_cart()
+        dbase.clear_cart_of_user(current_user.get_id())
         return redirect(url_for('customer_order'))
     return render_template('checkout.html', nav_bar=nav_bar, total=total, form=form)
 
 
 @app.route('/customer-order', methods=['GET', 'POST'])
+@login_required
 def customer_order():
     return render_template('customer-order.html', nav_bar=nav_bar)
 
@@ -174,10 +177,10 @@ def register():
                 flash('Этот email уже зарегистрирован, используйте другой email для регистрации', category='error')
             else:
                 dbase.add_user(form.first_name.data, form.last_name.data, form.e_mail.data, password_hash)
-                flash('Вы успешно зарегистрированы!', category='success')
+                return redirect('login')
         else:
             dbase.add_user(form.first_name.data, form.last_name.data, form.e_mail.data, password_hash)
-            flash('Вы успешно зарегистрированы!', category='success')
+            return redirect('login')
     return render_template('register.html', nav_bar=nav_bar, form=form)
 
 
