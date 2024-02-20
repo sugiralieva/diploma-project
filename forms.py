@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField
+from wtforms import StringField, SubmitField, PasswordField, BooleanField
 from wtforms.validators import Email, DataRequired, Length, EqualTo
 
 
@@ -17,6 +17,7 @@ class Register(FlaskForm):
 class LogIn(FlaskForm):
     e_mail = StringField('Email: ', validators=[Email(message='Некорректный email')])
     password = PasswordField('Пароль: ', validators=[DataRequired(), Length(min=5, max=20)])
+    remember = BooleanField(label='запомнить меня', default=False)
     submit = SubmitField('Войти')
 
 
@@ -34,3 +35,11 @@ class Order(FlaskForm):
     phone = StringField('Телефон: ', validators=[DataRequired(), Length(min=6, max=20)])
     e_mail = StringField('Email: ', validators=[Email(message='Некорректный email')])
     submit = SubmitField('Заказать')
+
+class Search(FlaskForm):
+    text = StringField('Поиск: ', validators=[DataRequired()])
+    search = SubmitField('Поиск')
+
+class Subscribe(FlaskForm):
+    e_mail = StringField('Email: ', validators=[Email(message='Некорректный email')])
+    subscribe = SubmitField('Подписаться!')

@@ -38,7 +38,7 @@
                         <p class="author-date">Автор: {{ author }} | {{ publication_date }}</p>
 
                         <div id="post-content">
-                            <p> {{ post }} </pp>
+                            <p> {{ post | safe }} </pp>
                             <p>
                                 <img src="data:;base64,{{ image }}" class="img-responsive" alt="Example blog post alt">
                             </p>

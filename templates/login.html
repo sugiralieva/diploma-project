@@ -66,6 +66,7 @@
                                     {{ form.password(class="form-control") }}
                                 {% endif %}
                             </div>
+                            <p>{{ form.remember() }}{{ form.remember.label() }}</p>
                             <div class="text-center">
                                 <i class="fa fa-sign-in"></i>{{ form.submit(class="btn btn-primary") }}
                             </div>

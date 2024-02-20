@@ -73,6 +73,15 @@ def index():
     return render_template('index.html', nav_bar=nav_bar, new_books=new_books, posts=posts)
 
 
+@app.route('/search/<string:text_for_search>', methods=['GET', 'POST'])
+def search(text_for_search):
+    search_result = dbase.search_book(text_for_search)
+    search_result = list(map(lambda i: list(i), search_result))
+    for image in search_result:
+        image[3] = b64encode(image[3]).decode("utf-8")
+    return render_template('search.html', nav_bar=nav_bar, search_result=search_result)
+
+
 @app.route('/detail/<int:book_id>', methods=['GET', 'POST'])
 def detail(book_id):
     dbase.create_table_cart()
@@ -194,7 +203,8 @@ def login():
         user = dbase.get_user_by_email(form.e_mail.data)
         if user and check_password_hash(user['password'], form.password.data):
             userlogin = UserLogin().create(user)
-            login_user(userlogin)
+            rm = True if form.remember.data else False
+            login_user(userlogin, remember=rm)
             return redirect(url_for('customer_account'))
         flash('Неверная пара логин/пароль', 'error')
 
@@ -215,6 +225,7 @@ def customer_account():
             flash('Пароли не совпадают!', category='error')
 
     return render_template('customer-account.html', nav_bar=nav_bar, form=form)
+
 
 @app.route('/logout')
 @login_required

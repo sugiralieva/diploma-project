@@ -120,7 +120,7 @@ class BookStoreDB:
             print('Ошибка получения книги из БД '+ str(e))
         return False
 
-    def get_books_by_category(self, cat, ):
+    def get_books_by_category(self, cat):
         # получаем список книг для отображения в category.html
         try:
 
@@ -249,8 +249,39 @@ customer_order TEXT NOT NULL)''')
             print('Ошибка получения поста из БД '+ str(e))
         return False
 
+    def create_table_blog_subscribers(self):
+        try:
+            self.cursor.execute('''
+            CREATE TABLE IF NOT EXISTS blog_subscribers(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            email TEXT)''')
+            self.db.commit()
+        except sq.Error as e:
+            print('Ошибка создания таблицы subscribers' + str(e))
+
+    def add_subscriber(self, e_mail):
+        try:
+            self.cursor.execute('INSERT INTO blog_subscribers(email) VALUES(?)', (e_mail,))
+            self.db.commit()
+        except sq.Error as e:
+            print('Ошибка записи данных в subscribers' + str(e))
+
+    def search_book(self, text):
+        # with sq.connect(self.db) as con:
+        #     self.cursor = con.cursor()
+        try:
+            self.cursor.execute(f'SELECT id, title, price, image FROM books WHERE title LIKE "%{text}%" OR author LIKE "%{text}%"')
+            res = self.cursor.fetchall()
+            if res:
+                return res
+        except sq.Error as e:
+            print('Ошибка получения книги из БД ' + str(e))
+        return False
+
+
+
 
 
 # db = BookStoreDB('bookstore.db')
-# user = db.get_all_books_in_cart(1)
+# user = db.search_book('нег')
 # print(user)

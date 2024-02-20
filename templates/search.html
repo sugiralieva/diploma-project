@@ -23,46 +23,11 @@
                     <ul class="breadcrumb">
                         <li><a href="{{ url_for('index') }}">Главная</a>
                         </li>
-                        <li>Категории</li>
                     </ul>
                     
 
-                    <div class="box info-bar">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-4 products-showing">
-                              
-                            </div>
-
-                            <div class="col-sm-12 col-md-8  products-number-sort">
-                                <div class="row">
-                                    <form class="form-inline">
-                                        <div class="col-md-6 col-sm-6">
-                                            <div class="products-number">
-                                                <strong>Показать</strong>  <a href="#" class="btn btn-default btn-sm btn-primary">12</a>  <a href="#" class="btn btn-default btn-sm">24</a>  <a href="#" class="btn btn-default btn-sm">все</a> книг(и)
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6">
-                                            <div class="products-sort-by">
-                                                <strong>Сортировать по категориям</strong>
-                                                <select name="sort-by" class="form-control" onchange="window.location.href = this.options[this.selectedIndex].value">
-                                                    <option selected disabled>Выберите категорию:</option>
-                                                    {% for i in nav_bar %}
-                                                    {% for j in i.sub%}
-                                                    <option value="{{ url_for('category', cat=j) }}">{{ j }}</option>
-                                                    {% endfor %}
-                                                    {% endfor %}
-                                                </select>
-                                                
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="row products">
-                        {% for cat in books_in_category %}
+                        {% for cat in search_result %}
 
                         <div class="col-md-3 col-sm-4">
                             <div class="product">
@@ -99,30 +64,6 @@
 
                     </div>
                     <!-- /.products -->
-
-                    <div class="pages">
-
-                        <p class="loadMore">
-                            <a href="#" class="btn btn-primary btn-lg"><i class="fa fa-chevron-down"></i> Load more</a>
-                        </p>
-
-                        <ul class="pagination">
-                            <li><a href="#">&laquo;</a>
-                            </li>
-                            <li class="active"><a href="#">1</a>
-                            </li>
-                            <li><a href="#">2</a>
-                            </li>
-                            <li><a href="#">3</a>
-                            </li>
-                            <li><a href="#">4</a>
-                            </li>
-                            <li><a href="#">5</a>
-                            </li>
-                            <li><a href="#">&raquo;</a>
-                            </li>
-                        </ul>
-                    </div>    
 
 
                 </div>
