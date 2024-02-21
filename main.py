@@ -3,7 +3,6 @@ import datetime
 from functools import reduce
 from flask import Flask
 from flask import render_template, url_for, request, flash, session, redirect, abort, g
-from flask_paginate import Pagination, get_page_parameter
 import sqlite3 as sq
 import os
 from bookstore_db import BookStoreDB
@@ -103,6 +102,7 @@ def detail(book_id):
     new_books = list(map(lambda i: list(i), new_books))
     for img in new_books:
         img[3] = b64encode(img[3]).decode("utf-8")
+
     return render_template('detail.html', nav_bar=nav_bar, book_id=book_id, title=title, price=price, description=description, image=image, new_books=new_books)
 
 
@@ -112,7 +112,16 @@ def category(cat):
     books_in_category = list(map(lambda i: list(i), books_in_category))
     for image in books_in_category:
         image[3] = b64encode(image[3]).decode("utf-8")
-    return render_template('category.html', nav_bar=nav_bar, books_in_category=books_in_category)
+
+    page = request.args.get('page', 1, type=int)
+    per_page = 12
+    start = (page - 1) * per_page
+    end = start + per_page
+    total_pages = (len(books_in_category) + per_page -1) // per_page
+
+    items_on_page = books_in_category[start:end]
+
+    return render_template('category.html', cat=cat, nav_bar=nav_bar, books_in_category=books_in_category, page=page, items_on_page=items_on_page, total_pages=total_pages)
 
 
 @app.route('/cart', methods=['GET', 'POST'])
@@ -209,6 +218,7 @@ def login():
         flash('Неверная пара логин/пароль', 'error')
 
     return render_template('login.html', nav_bar=nav_bar, form=form)
+
 
 @app.route('/customer-account', methods=['GET', 'POST'])
 @login_required

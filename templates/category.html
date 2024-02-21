@@ -37,9 +37,7 @@
                                 <div class="row">
                                     <form class="form-inline">
                                         <div class="col-md-6 col-sm-6">
-                                            <div class="products-number">
-                                                <strong>Показать</strong>  <a href="#" class="btn btn-default btn-sm btn-primary">12</a>  <a href="#" class="btn btn-default btn-sm">24</a>  <a href="#" class="btn btn-default btn-sm">все</a> книг(и)
-                                            </div>
+                                           
                                         </div>
                                         <div class="col-md-6 col-sm-6">
                                             <div class="products-sort-by">
@@ -62,7 +60,7 @@
                     </div>
 
                     <div class="row products">
-                        {% for cat in books_in_category %}
+                        {% for cat in items_on_page %}
 
                         <div class="col-md-3 col-sm-4">
                             <div class="product">
@@ -101,26 +99,20 @@
                     <!-- /.products -->
 
                     <div class="pages">
-
-                        <p class="loadMore">
-                            <a href="#" class="btn btn-primary btn-lg"><i class="fa fa-chevron-down"></i> Load more</a>
-                        </p>
-
                         <ul class="pagination">
-                            <li><a href="#">&laquo;</a>
-                            </li>
-                            <li class="active"><a href="#">1</a>
-                            </li>
-                            <li><a href="#">2</a>
-                            </li>
-                            <li><a href="#">3</a>
-                            </li>
-                            <li><a href="#">4</a>
-                            </li>
-                            <li><a href="#">5</a>
-                            </li>
-                            <li><a href="#">&raquo;</a>
-                            </li>
+
+                            {% if page > 1 %}
+                            <li><a href="{{ url_for('category', cat=cat, page=page-1) }}">Пред</a></li>
+                            {% endif %}
+
+                            {% for i in range(1, total_pages+1) %}
+                            <li class="{% if page == i %} active {% endif %}"><a href="{{ url_for('category', cat=cat, page=i) }}">{{ i }}</a></li>
+                            {% endfor %}
+                            
+                            {% if page < total_pages %}
+                            <li><a href="{{ url_for('category', cat=cat, page=page+1) }}">След</a></li>
+                            {% endif %}
+
                         </ul>
                     </div>    
 
