@@ -39,7 +39,3 @@ class Order(FlaskForm):
 class Search(FlaskForm):
     text = StringField('Поиск: ', validators=[DataRequired()])
     search = SubmitField('Поиск')
-
-class Subscribe(FlaskForm):
-    e_mail = StringField('Email: ', validators=[Email(message='Некорректный email')])
-    subscribe = SubmitField('Подписаться!')

@@ -47,6 +47,14 @@ def get_db():
     return g.link_db
 
 
+def search_form(form):
+    if request.method == 'POST':
+        search_data = request.form['search']
+        return redirect(url_for('search', text_for_search=search_data))
+    else:
+        return redirect(url_for('blog'))
+
+
 dbase = None
 @app.before_request
 def before_request():
