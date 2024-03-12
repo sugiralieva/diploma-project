@@ -1,5 +1,5 @@
 from base64 import b64encode
-import datetime
+from dotenv import load_dotenv
 from functools import reduce
 from flask import Flask
 from flask import render_template, url_for, request, flash, session, redirect, abort, g
@@ -10,13 +10,17 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from forms import Register, LogIn, ChangePassword, Order
 from User_login import UserLogin
+from flask_cors import CORS
 
 DATABASE = 'bookstore.db'
-DEBUG = True
 SECRET_KEY = 'fdgdfgdfggf786hfg6hfg6h7f'
 MAX_CONTENT_LENGTH = 1024 * 1024
 
 app = Flask(__name__)
+load_dotenv()
+CORS(app)
+
+app.config['DEBUG'] = os.environ.get('FLASK_DEBUG')
 app.config.from_object(__name__)
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'bookstore.db')))
 
@@ -264,4 +268,4 @@ def error():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
