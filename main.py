@@ -8,7 +8,7 @@ import os
 from bookstore_db import BookStoreDB
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-from forms import Register, LogIn, ChangePassword, Order
+from forms import Register, LogIn, ChangePassword, Order, Search
 from User_login import UserLogin
 from flask_cors import CORS
 
@@ -22,7 +22,7 @@ CORS(app)
 
 app.config['DEBUG'] = os.environ.get('FLASK_DEBUG')
 app.config.from_object(__name__)
-app.config.update(dict(DATABASE=os.path.join(app.root_path, 'bookstore.db')))
+app.config.update(dict(DATABASE=os.path.join(app.root_path, 'db/bookstore.db')))
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -51,14 +51,6 @@ def get_db():
     return g.link_db
 
 
-def search_form(form):
-    if request.method == 'POST':
-        search_data = request.form['search']
-        return redirect(url_for('search', text_for_search=search_data))
-    else:
-        return redirect(url_for('blog'))
-
-
 dbase = None
 @app.before_request
 def before_request():
@@ -84,13 +76,17 @@ def index():
     return render_template('index.html', nav_bar=nav_bar, new_books=new_books, posts=posts)
 
 
-@app.route('/search/<string:text_for_search>', methods=['GET', 'POST'])
-def search(text_for_search):
-    search_result = dbase.search_book(text_for_search)
-    search_result = list(map(lambda i: list(i), search_result))
-    for image in search_result:
-        image[3] = b64encode(image[3]).decode("utf-8")
-    return render_template('search.html', nav_bar=nav_bar, search_result=search_result)
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    query = request.form.get('query')
+
+    search_result = dbase.search_book(query)
+    if query and search_result:
+        search_result = list(map(lambda i: list(i), search_result))
+        for image in search_result:
+            image[3] = b64encode(image[3]).decode("utf-8")
+
+    return render_template('search.html', nav_bar=nav_bar, search_result=search_result, query=query)
 
 
 @app.route('/detail/<int:book_id>', methods=['GET', 'POST'])
@@ -149,6 +145,7 @@ def cart():
     if request.method == 'POST':
         dbase.delete_book_from_cart(request.form.get('delete'), current_user.get_id())
         return redirect(url_for('cart'))
+
     return render_template('cart.html', nav_bar=nav_bar, books_in_cart=books_in_cart, total=total)
 
 
@@ -168,6 +165,7 @@ def checkout():
         dbase.add_order(current_user.get_id(), form.zip_address.data, form.street.data, form.city.data, form.country.data, form.phone.data, form.e_mail.data, order)
         dbase.clear_cart_of_user(current_user.get_id())
         return redirect(url_for('customer_order'))
+
     return render_template('checkout.html', nav_bar=nav_bar, total=total, form=form)
 
 
@@ -191,6 +189,7 @@ def blog():
 def post(post_id):
     title, author, post, image, publication_date = dbase.get_post_by_id(post_id)
     image = b64encode(image).decode("utf-8")
+
     return render_template('post.html', nav_bar=nav_bar, post_id=post_id, title=title, author=author, post=post, image=image, publication_date=publication_date)
 
 
@@ -211,6 +210,7 @@ def register():
         else:
             dbase.add_user(form.first_name.data, form.last_name.data, form.e_mail.data, password_hash)
             return redirect('login')
+
     return render_template('register.html', nav_bar=nav_bar, form=form)
 
 
@@ -254,6 +254,7 @@ def customer_account():
 def logout():
     logout_user()
     flash("Вы вышли из аккаунта", "success")
+
     return redirect(url_for('login'))
 
 

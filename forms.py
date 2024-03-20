@@ -38,4 +38,4 @@ class Order(FlaskForm):
 
 class Search(FlaskForm):
     text = StringField('Поиск: ', validators=[DataRequired()])
-    search = SubmitField('Поиск')
+    submit = SubmitField('Поиск')

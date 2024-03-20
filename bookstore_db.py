@@ -280,8 +280,6 @@ customer_order TEXT NOT NULL)''')
 
 
 
-
-
-# db = BookStoreDB('bookstore.db')
-# user = db.search_book('нег')
+# db = BookStoreDB('db/bookstore.db')
+# user = db.search_book('Нег')
 # print(user)

@@ -25,8 +25,9 @@
                         </li>
                     </ul>
                     
-
+                    <h2>Результаты поиска для "{{ query }}"</h2>
                     <div class="row products">
+                        {% if search_result %}
                         {% for cat in search_result %}
 
                         <div class="col-md-3 col-sm-4">
@@ -61,6 +62,9 @@
                             <!-- /.product -->
                         </div>
                         {% endfor %}
+                        {% else %}
+                            <p> Ничего не найдено </p>
+                        {% endif %}
 
                     </div>
                     <!-- /.products -->
