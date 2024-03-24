@@ -22,7 +22,7 @@ CORS(app)
 
 app.config['DEBUG'] = os.environ.get('FLASK_DEBUG')
 app.config.from_object(__name__)
-app.config.update(dict(DATABASE=os.path.join(app.root_path, 'db/bookstore.db')))
+app.config.update(dict(DATABASE=os.path.join(app.root_path, 'bookstore.db')))
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
