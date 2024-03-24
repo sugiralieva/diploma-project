@@ -35,7 +35,3 @@ class Order(FlaskForm):
     phone = StringField('Телефон: ', validators=[DataRequired(), Length(min=6, max=20)])
     e_mail = StringField('Email: ', validators=[Email(message='Некорректный email')])
     submit = SubmitField('Заказать')
-
-class Search(FlaskForm):
-    text = StringField('Поиск: ', validators=[DataRequired()])
-    submit = SubmitField('Поиск')
